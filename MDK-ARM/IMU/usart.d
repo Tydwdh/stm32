@@ -32,3 +32,4 @@ imu\usart.o: .\Hardware\RingBuffer.h
 imu\usart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 imu\usart.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 imu\usart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+imu\usart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h

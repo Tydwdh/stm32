@@ -14,7 +14,6 @@
 // 函数声明
 extern uint8_t rx_buffer[MAX_RX_LEN];
 
-
 typedef struct
 {
     UART_HandleTypeDef *huart;
@@ -22,8 +21,10 @@ typedef struct
     ring_buffer *rb_tx;
 } muart_handle;
 
+extern muart_handle muart1;
 
 
+void MUART_Init(void);
 void MUART_Data_Process(muart_handle * muart);
 void MUART_Data_Transimit(muart_handle * muart);
 void MUART_Printf(muart_handle * muart, const char *fmt, ...);

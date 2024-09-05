@@ -32,3 +32,4 @@ imu\gpio.o: .\Hardware\RingBuffer.h
 imu\gpio.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 imu\gpio.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 imu\gpio.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+imu\gpio.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h

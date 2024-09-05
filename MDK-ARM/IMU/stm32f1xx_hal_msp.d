@@ -31,3 +31,4 @@ imu\stm32f1xx_hal_msp.o: .\Hardware\RingBuffer.h
 imu\stm32f1xx_hal_msp.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 imu\stm32f1xx_hal_msp.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 imu\stm32f1xx_hal_msp.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+imu\stm32f1xx_hal_msp.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h

@@ -32,3 +32,5 @@ imu\muart.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 imu\muart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 imu\muart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdarg.h
 imu\muart.o: ../Core/Inc/main.h
+imu\muart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
+imu\muart.o: ../Core/Inc/usart.h

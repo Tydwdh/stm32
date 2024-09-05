@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "main.h": "c",
-        "stdarg.h": "c"
+        "stdarg.h": "c",
+        "dma.h": "c"
     }
 }

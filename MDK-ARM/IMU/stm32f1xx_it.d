@@ -31,4 +31,5 @@ imu\stm32f1xx_it.o: .\Hardware\RingBuffer.h
 imu\stm32f1xx_it.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdlib.h
 imu\stm32f1xx_it.o: D:\keil5\ARM\ARMCC\Bin\..\include\string.h
 imu\stm32f1xx_it.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
+imu\stm32f1xx_it.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 imu\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h
