@@ -33,6 +33,8 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "Muart.h"
 #include "RingBuffer.h"
+#include "task.h"
+#include "mtask.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -66,6 +68,7 @@ void Error_Handler(void);
 
 #ifdef __cplusplus
 }
+
 #endif
 
 #endif /* __MAIN_H */
