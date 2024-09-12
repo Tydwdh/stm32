@@ -3,6 +3,7 @@
         "main.h": "c",
         "stdarg.h": "c",
         "dma.h": "c",
-        "mtask.h": "c"
+        "mtask.h": "c",
+        "ringbuffer.h": "c"
     }
 }

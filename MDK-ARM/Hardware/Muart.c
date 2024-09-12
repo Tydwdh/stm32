@@ -4,22 +4,20 @@
 #include "usart.h"
 
 uint8_t rx_buffer[MAX_RX_LEN];
-ring_buffer muartRxRingBuffer;
-ring_buffer muartTxRingBuffer;
 
 
 muart_handle muart1;
-
+//使用DMA空闲中断接收数据建议将DMA的半完成中断中的HAL_UARTEx_RxEventCallback注释掉
 void MUART_Init(void)
 {
-	RingBuffer_alloc(&muartRxRingBuffer, 1024, 1);
-	RingBuffer_alloc(&muartTxRingBuffer, 1024, 1);
+	muart1.rb_rx = (ring_buffer *)MEM_malloc(sizeof(ring_buffer));
+	muart1.rb_tx = (ring_buffer *)MEM_malloc(sizeof(ring_buffer));
+	RingBuffer_alloc(muart1.rb_rx, 1024, 1);
+	RingBuffer_alloc(muart1.rb_tx, 1024, 1);
 
-	muart1.rb_rx = &muartRxRingBuffer;
-	muart1.rb_tx = &muartTxRingBuffer;
 	muart1.huart = &huart1;
 
-	HAL_UARTEx_ReceiveToIdle_DMA(muart1.huart, rx_buffer, MAX_RX_LEN * 2);
+	HAL_UARTEx_ReceiveToIdle_DMA(muart1.huart, rx_buffer, MAX_RX_LEN);
 }
 
 __weak void MUART_Data_Process(muart_handle * muart)
@@ -70,10 +68,10 @@ void MUART_Printf(muart_handle * muart, const char * fmt, ...)
 // UART接收空闲中断回调函数
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef * huart, uint16_t Size)
 {
-	if(huart->Instance == USART1)
+	if(huart->Instance == muart1.huart->Instance)
 	{
 		RingBuffer_in(muart1.rb_rx, rx_buffer, Size);
-		HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buffer, MAX_RX_LEN * 2);
+		HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buffer, MAX_RX_LEN);
 	}
 }
 
