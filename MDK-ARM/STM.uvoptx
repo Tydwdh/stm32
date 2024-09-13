@@ -151,7 +151,17 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>taskCount</ItemText>
+          <ItemText>huart1</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>nb_remaining_rx_data </ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>huart</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
