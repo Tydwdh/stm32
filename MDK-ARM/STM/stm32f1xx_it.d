@@ -36,4 +36,5 @@ stm\stm32f1xx_it.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 stm\stm32f1xx_it.o: ./Hardware/task.h
 stm\stm32f1xx_it.o: ../Core/Inc/mtask.h
 stm\stm32f1xx_it.o: ../Core/Inc/main.h
+stm\stm32f1xx_it.o: ./Hardware/key.h
 stm\stm32f1xx_it.o: ../Core/Inc/stm32f1xx_it.h

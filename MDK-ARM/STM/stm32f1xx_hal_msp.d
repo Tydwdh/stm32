@@ -36,3 +36,4 @@ stm\stm32f1xx_hal_msp.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 stm\stm32f1xx_hal_msp.o: ./Hardware/task.h
 stm\stm32f1xx_hal_msp.o: ../Core/Inc/mtask.h
 stm\stm32f1xx_hal_msp.o: ../Core/Inc/main.h
+stm\stm32f1xx_hal_msp.o: ./Hardware/key.h

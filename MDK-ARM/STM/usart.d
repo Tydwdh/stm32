@@ -37,3 +37,4 @@ stm\usart.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 stm\usart.o: ./Hardware/task.h
 stm\usart.o: ../Core/Inc/mtask.h
 stm\usart.o: ../Core/Inc/main.h
+stm\usart.o: ./Hardware/key.h

@@ -36,4 +36,4 @@ stm\mtask.o: ./Hardware/memmanage.h
 stm\mtask.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdbool.h
 stm\mtask.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 stm\mtask.o: ../Core/Inc/mtask.h
-stm\mtask.o: ../Core/Inc/main.h
+stm\mtask.o: ./Hardware/key.h

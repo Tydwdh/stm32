@@ -37,3 +37,4 @@ stm\gpio.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 stm\gpio.o: ./Hardware/task.h
 stm\gpio.o: ../Core/Inc/mtask.h
 stm\gpio.o: ../Core/Inc/main.h
+stm\gpio.o: ./Hardware/key.h

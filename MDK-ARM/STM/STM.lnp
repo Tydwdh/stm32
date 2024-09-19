@@ -26,6 +26,7 @@
 "stm\muart.o"
 "stm\ringbuffer.o"
 "stm\task.o"
+"stm\key.o"
 --library_type=microlib --strict --scatter "STM\STM.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

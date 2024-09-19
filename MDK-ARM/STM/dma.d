@@ -37,3 +37,4 @@ stm\dma.o: D:\keil5\ARM\ARMCC\Bin\..\include\stdio.h
 stm\dma.o: ./Hardware/task.h
 stm\dma.o: ../Core/Inc/mtask.h
 stm\dma.o: ../Core/Inc/main.h
+stm\dma.o: ./Hardware/key.h

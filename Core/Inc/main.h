@@ -35,6 +35,7 @@ extern "C" {
 #include "RingBuffer.h"
 #include "task.h"
 #include "mtask.h"
+#include "key.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

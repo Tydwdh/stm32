@@ -4,6 +4,9 @@
         "stdarg.h": "c",
         "dma.h": "c",
         "mtask.h": "c",
-        "ringbuffer.h": "c"
+        "ringbuffer.h": "c",
+        "task.h": "c",
+        "muart.h": "c",
+        "usart.h": "c"
     }
 }

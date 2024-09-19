@@ -37,4 +37,5 @@ stm\muart.o: ../Core/Inc/main.h
 stm\muart.o: ./Hardware/task.h
 stm\muart.o: ../Core/Inc/mtask.h
 stm\muart.o: ../Core/Inc/main.h
+stm\muart.o: ./Hardware/key.h
 stm\muart.o: ../Core/Inc/usart.h

@@ -106,7 +106,8 @@
                 "D:\\keil5\\ARM\\ARMCC\\include\\rw",
                 "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\MDK-ARM",
                 "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Src",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Core\\Src"
+                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Core\\Src",
+                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\MDK-ARM\\hardware"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
