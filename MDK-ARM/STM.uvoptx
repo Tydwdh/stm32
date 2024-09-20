@@ -152,16 +152,16 @@
           <Type>0</Type>
           <LineNumber>59</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134231054</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
+          <BreakIfRCount>0</BreakIfRCount>
           <Filename>.\hardware\key.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\STM\hardware/key.c\59</Expression>
+          <Expression></Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -183,7 +183,7 @@
         <Ww>
           <count>3</count>
           <WinNumber>1</WinNumber>
-          <ItemText>key-&gt;triggered</ItemText>
+          <ItemText>key-&gt;interval_time</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
