@@ -61,17 +61,17 @@ static void Key_handler(void)
 
 	if(Key_is_flag_set(&key1, SINGLE_CLICK))
 	{
-		MUART_Printf(&muart1, "单击\n");
+		MUART_Printf(&muart1, "单击");
 	}
 
 	if(Key_is_flag_set(&key1, DOUBLE_CLICK))
 	{
-		MUART_Printf(&muart1, "双击\n");
+		MUART_Printf(&muart1, "双击");
 	}
 
 	if(Key_is_flag_set(&key1, LONG_PRESSRD))
 	{
-		MUART_Printf(&muart1, "长按\n");
+		MUART_Printf(&muart1, "长按");
 	}
 }
 

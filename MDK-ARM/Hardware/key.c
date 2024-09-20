@@ -16,6 +16,7 @@ void Key_init(Key_t * key)
 static void handle_hover_state(Key_t * key);
 static void handle_debounce_state(Key_t * key);
 static void handle_pressed_state(Key_t * key);
+static void interval_time_increase(Key_t * key);
 
 void Key_manage()
 {
@@ -50,13 +51,12 @@ void handle_hover_state(Key_t * key)
 		key->status = DEBOUNCE;
 	}
 
-	key->interval_time++;
-	key->pressed_time = 0;
+	interval_time_increase(key);
+
 
 	if(!key->lock && key->interval_time > INTERVAL_TIME)
 	{
 		key->triggered |= SINGLE_CLICK;
-		key->interval_time = 0;
 		key->lock = true;
 	}
 }
@@ -73,7 +73,7 @@ void handle_debounce_state(Key_t * key)
 		key->status = HOVER;
 	}
 
-	key->interval_time++;
+	interval_time_increase(key);
 }
 
 void handle_pressed_state(Key_t * key)
@@ -81,11 +81,11 @@ void handle_pressed_state(Key_t * key)
 	if(key->pressed && !key->lock && (key->init.flag & LONG_PRESSRD))
 	{
 		key->pressed_time++;
-		key->interval_time++;
 
 		if(key->pressed_time >= LONG_PRESSRD_TIME)
 		{
 			key->triggered |= LONG_PRESSRD;
+			key->interval_time = INTERVAL_TIME + 1;
 			key->lock = true;
 		}
 	}
@@ -101,10 +101,9 @@ void handle_pressed_state(Key_t * key)
 				key->interval_time = INTERVAL_TIME + 1;
 				key->lock = true;
 			}
-			else if((key->init.flag & SINGLE_CLICK) && !(key->init.flag & DOUBLE_CLICK))
+			else if((key->init.flag & ~LONG_PRESSRD) == SINGLE_CLICK)
 			{
 				key->triggered |= SINGLE_CLICK;
-				key->interval_time = 0;
 				key->lock = true;
 			}
 			else
@@ -112,6 +111,8 @@ void handle_pressed_state(Key_t * key)
 				key->interval_time = 0;
 			}
 		}
+
+		key->pressed_time = 0;
 	}
 }
 
@@ -127,4 +128,10 @@ bool Key_is_flag_set(Key_t * key, enum KeyFlag flag)
 	return false;
 }
 
-
+static void interval_time_increase(Key_t * key)
+{
+	if(key->interval_time <= INTERVAL_TIME)
+	{
+		key->interval_time++;
+	}
+}

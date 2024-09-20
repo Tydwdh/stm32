@@ -96,18 +96,18 @@
         {
             "name": "STM",
             "includePath": [
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Core\\Inc",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Inc",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Drivers\\CMSIS\\Include",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\MDK-ARM\\Hardware",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Core\\Inc",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Inc",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Inc\\Legacy",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Drivers\\CMSIS\\Device\\ST\\STM32F1xx\\Include",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Drivers\\CMSIS\\Include",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\MDK-ARM\\Hardware",
                 "D:\\keil5\\ARM\\ARMCC\\include",
                 "D:\\keil5\\ARM\\ARMCC\\include\\rw",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\MDK-ARM",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Src",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\Core\\Src",
-                "c:\\Users\\Tyd\\Desktop\\standard\\stm32\\MDK-ARM\\hardware"
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\MDK-ARM",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Drivers\\STM32F1xx_HAL_Driver\\Src",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\Core\\Src",
+                "c:\\Users\\Tyd\\Desktop\\standarad\\stm32\\MDK-ARM\\hardware"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
