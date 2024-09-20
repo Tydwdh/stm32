@@ -7,8 +7,17 @@ uint16_t key_number = 0;
 #define LONG_PRESSRD_TIME 80
 #define INTERVAL_TIME 20
 
+/**
+ * @brief 按键初始化
+ * @param key 按键控制结构体
+ */
 void Key_init(Key_t * key)
 {
+	if(key == NULL)
+	{
+		return;
+	}
+
 	key->lock = true;
 	keys[key_number++] = key;
 }
@@ -18,6 +27,9 @@ static void handle_debounce_state(Key_t * key);
 static void handle_pressed_state(Key_t * key);
 static void interval_time_increase(Key_t * key);
 
+/**
+ * @brief 按键逻辑管理函数,请间隔固定时间调用此函数
+ */
 void Key_manage()
 {
 	for(int i = 0; i < key_number; i++)
