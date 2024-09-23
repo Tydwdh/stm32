@@ -60,7 +60,7 @@ void MUART_Printf(muart_handle * muart, const char * fmt, ...)
 	va_start(args, fmt);
 	vsnprintf((char *)buffer, sizeof(buffer), fmt, args);
 	va_end(args);
-	RingBuffer_in(muart->rb_tx, buffer, strlen(buffer));
+	RingBuffer_in(muart->rb_tx, buffer, strlen((char *)buffer));
 }
 
 
