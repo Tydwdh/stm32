@@ -4,11 +4,11 @@
 
 volatile uint32_t time_counter = 0;
 
-
+#define NULL_TASK    (MAX_TASKS+1)
 
 task_t headTask =
 {
-	.next = MAX_TASKS + 1
+	.next = NULL_TASK,
 };
 task_t * taskQueue[MAX_TASKS + 2] = {&headTask, NULL};
 
@@ -17,7 +17,7 @@ volatile uint16_t currentTask = 0;
 
 static int16_t Task_Find_Empty(void)
 {
-	for(int i = 1; i < MAX_TASKS + 1; i++)
+	for(int16_t i = 1; i < NULL_TASK; i++)
 	{
 		if(taskQueue[i] == NULL)
 		{
@@ -37,7 +37,7 @@ int16_t Task_Create(task_t * task)
 {
 	currentTask = 0;
 
-	while(taskQueue[currentTask]->next != MAX_TASKS + 1)
+	while(taskQueue[currentTask]->next != NULL_TASK)
 	{
 		currentTask = taskQueue[currentTask]->next;
 	}
@@ -45,7 +45,7 @@ int16_t Task_Create(task_t * task)
 	if(taskCount < MAX_TASKS)
 	{
 		taskQueue[currentTask]->next = Task_Find_Empty();
-		task->next = MAX_TASKS + 1;
+		task->next = NULL_TASK;
 		task->delete = false;
 		taskQueue[taskQueue[currentTask]->next] = task;
 
@@ -74,9 +74,9 @@ void Task_Scheduler_Delete()
 {
 	currentTask = 0;
 
-	while(taskQueue[currentTask]->next != MAX_TASKS + 1)
+	while(taskQueue[currentTask]->next != NULL_TASK)
 	{
-		uint16_t lastTask = 0;
+		int16_t lastTask = 0;
 		lastTask = currentTask;
 		currentTask = taskQueue[currentTask]->next;
 
@@ -85,6 +85,23 @@ void Task_Scheduler_Delete()
 			taskQueue[lastTask]->next = taskQueue[currentTask]->next;
 			taskQueue[currentTask] = NULL;
 			currentTask = lastTask;
+		}
+	}
+}
+
+
+void Task_Execute(void)
+{
+	currentTask = 0;
+
+	while(taskQueue[currentTask]->next != NULL_TASK)
+	{
+		currentTask = taskQueue[currentTask]->next;
+
+		if(time_counter - taskQueue[currentTask]->last_time >= taskQueue[currentTask]->period)
+		{
+			taskQueue[currentTask]->last_time = time_counter;
+			taskQueue[currentTask]->task_func();
 		}
 	}
 }
@@ -102,20 +119,10 @@ void Task_Scheduler(void)
 		if(time_counter != last_time)
 		{
 			last_time = time_counter;
-			currentTask = 0;
-
-			while(taskQueue[currentTask]->next != MAX_TASKS + 1)
-			{
-				currentTask = taskQueue[currentTask]->next;
-
-				if(time_counter - taskQueue[currentTask]->last_time >= taskQueue[currentTask]->period)
-				{
-					taskQueue[currentTask]->last_time = time_counter;
-					taskQueue[currentTask]->task_func();
-				}
-			}
-
+			Task_Execute();
 			Task_Scheduler_Delete();
 		}
 	}
 }
+
+

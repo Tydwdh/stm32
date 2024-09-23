@@ -32,7 +32,6 @@ typedef struct task_t
 	int16_t next; // 指向下一个任务的索引
 } task_t;
 
-void Task_Init(void);
 
 int16_t Task_Create(task_t * task);
 void Task_Delete(task_t * task);

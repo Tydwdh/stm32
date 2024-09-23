@@ -88,43 +88,55 @@ void handle_debounce_state(Key_t * key)
 	interval_time_increase(key);
 }
 
+void handle_key_release(Key_t * key)
+{
+	key->status = HOVER;
+	key->pressed_time = 0;
+
+	if(key->lock)
+	{
+		return;
+	}
+
+	if((key->init.flag & DOUBLE_CLICK) && key->interval_time <= INTERVAL_TIME)
+	{
+		key->triggered |= DOUBLE_CLICK;
+		key->interval_time = INTERVAL_TIME + 1;
+		key->lock = true;
+	}
+	else if((key->init.flag & ~LONG_PRESSRD) == SINGLE_CLICK)
+	{
+		key->triggered |= SINGLE_CLICK;
+		key->lock = true;
+	}
+	else
+	{
+		key->interval_time = 0;
+	}
+}
+
+
+void handle_key_preased(Key_t * key)
+{
+	key->pressed_time++;
+
+	if(key->pressed_time >= LONG_PRESSRD_TIME)
+	{
+		key->triggered |= LONG_PRESSRD;
+		key->interval_time = INTERVAL_TIME + 1;
+		key->lock = true;
+	}
+}
+
 void handle_pressed_state(Key_t * key)
 {
-	if(key->pressed && !key->lock && (key->init.flag & LONG_PRESSRD))
+	if(!key->pressed)
 	{
-		key->pressed_time++;
-
-		if(key->pressed_time >= LONG_PRESSRD_TIME)
-		{
-			key->triggered |= LONG_PRESSRD;
-			key->interval_time = INTERVAL_TIME + 1;
-			key->lock = true;
-		}
+		handle_key_release(key);
 	}
-	else if(!key->pressed)
+	else if(!key->lock && (key->init.flag & LONG_PRESSRD))
 	{
-		key->status = HOVER;
-
-		if(!key->lock)
-		{
-			if((key->init.flag & DOUBLE_CLICK) && key->interval_time <= INTERVAL_TIME)
-			{
-				key->triggered |= DOUBLE_CLICK;
-				key->interval_time = INTERVAL_TIME + 1;
-				key->lock = true;
-			}
-			else if((key->init.flag & ~LONG_PRESSRD) == SINGLE_CLICK)
-			{
-				key->triggered |= SINGLE_CLICK;
-				key->lock = true;
-			}
-			else
-			{
-				key->interval_time = 0;
-			}
-		}
-
-		key->pressed_time = 0;
+		handle_key_preased(key);
 	}
 }
 
