@@ -9,7 +9,7 @@
 #include "string.h"
 
 
-#define MAX_RX_LEN 256
+#define MAX_RX_LEN 1024
 
 // 函数声明
 extern uint8_t rx_buffer[MAX_RX_LEN];

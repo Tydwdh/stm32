@@ -7,6 +7,7 @@ uint8_t rx_buffer[MAX_RX_LEN];
 
 
 muart_handle muart1;
+static uint8_t buffer[MAX_RX_LEN];
 //使用DMA空闲中断接收数据建议将DMA的半完成中断中的HAL_UARTEx_RxEventCallback注释掉
 void MUART_Init(void)
 {
@@ -20,15 +21,15 @@ void MUART_Init(void)
 	HAL_UARTEx_ReceiveToIdle_DMA(muart1.huart, rx_buffer, MAX_RX_LEN);
 }
 
+
 __weak void MUART_Data_Process(muart_handle * muart)
 {
 	//简单收到什么返回什么
 	while(RingBuffer_used(muart->rb_rx) != 0)
 	{
 		uint16_t len = RingBuffer_used(muart->rb_rx);
-		uint8_t data[MAX_RX_LEN];
-		RingBuffer_out(muart->rb_rx, data, len);
-		RingBuffer_in(muart->rb_tx, data, len);
+		RingBuffer_out(muart->rb_rx, buffer, len);
+		RingBuffer_in(muart->rb_tx, buffer, len);
 	}
 }
 
@@ -41,9 +42,8 @@ void MUART_Data_Transimit(muart_handle * muart)
 	while(RingBuffer_used(muart->rb_tx) != 0 && muart->huart->gState == HAL_UART_STATE_READY)
 	{
 		uint16_t len = RingBuffer_used(muart->rb_tx);
-		static uint8_t data[MAX_RX_LEN];
-		RingBuffer_out(muart->rb_tx, data, len);
-		HAL_UART_Transmit_DMA(muart->huart, data, len);
+		RingBuffer_out(muart->rb_tx, buffer, len);
+		HAL_UART_Transmit_DMA(muart->huart, buffer, len);
 	}
 }
 
@@ -58,10 +58,9 @@ void MUART_Printf(muart_handle * muart, const char * fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	static char buf[256];
-	vsnprintf(buf, sizeof(buf), fmt, args);
+	vsnprintf((char *)buffer, sizeof(buffer), fmt, args);
 	va_end(args);
-	RingBuffer_in(muart->rb_tx, (uint8_t *)buf, strlen(buf));
+	RingBuffer_in(muart->rb_tx, buffer, strlen(buffer));
 }
 
 

@@ -14,25 +14,28 @@
 #ifndef _TASK_H_
 #define _TASK_H_
 
-
 #include "stdint.h"
 #include "stdlib.h"
+#include "stdbool.h"
 
 #define MAX_TASKS 20
 
 extern volatile uint32_t time_counter;
-
 
 typedef struct task_t
 {
 	void (*task_func)(void);
 	uint32_t period;
 	uint32_t last_time;
+
+	bool delete;
+	int16_t next; // 指向下一个任务的索引
 } task_t;
+
+void Task_Init(void);
 
 int16_t Task_Create(task_t * task);
 void Task_Delete(task_t * task);
 void Task_Scheduler(void);
 
 #endif /* _TASK_H_ */
-

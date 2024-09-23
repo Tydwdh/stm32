@@ -4,14 +4,29 @@
 
 volatile uint32_t time_counter = 0;
 
-#include "stdbool.h"
-task_t * taskQueue[MAX_TASKS] = {NULL};
-task_t * taskDeleted[MAX_TASKS] = {NULL};
-
-volatile uint8_t taskdeleteCount = 0;
-volatile uint8_t taskCount = 0;
 
 
+task_t headTask =
+{
+	.next = MAX_TASKS + 1
+};
+task_t * taskQueue[MAX_TASKS + 2] = {&headTask, NULL};
+
+volatile uint16_t taskCount = 0;
+volatile uint16_t currentTask = 0;
+
+static int16_t Task_Find_Empty(void)
+{
+	for(int i = 1; i < MAX_TASKS + 1; i++)
+	{
+		if(taskQueue[i] == NULL)
+		{
+			return i;
+		}
+	}
+
+	return 0;
+}
 
 /**
  * @brief 创建一个任务
@@ -20,9 +35,20 @@ volatile uint8_t taskCount = 0;
  */
 int16_t Task_Create(task_t * task)
 {
+	currentTask = 0;
+
+	while(taskQueue[currentTask]->next != MAX_TASKS + 1)
+	{
+		currentTask = taskQueue[currentTask]->next;
+	}
+
 	if(taskCount < MAX_TASKS)
 	{
-		taskQueue[taskCount] = task;
+		taskQueue[currentTask]->next = Task_Find_Empty();
+		task->next = MAX_TASKS + 1;
+		task->delete = false;
+		taskQueue[taskQueue[currentTask]->next] = task;
+
 		taskCount++;
 		return taskCount;
 	}
@@ -38,8 +64,7 @@ int16_t Task_Create(task_t * task)
  */
 void Task_Delete(task_t * task)
 {
-	taskDeleted[taskdeleteCount] = task;
-	taskdeleteCount++;
+	task->delete = true;
 }
 
 /**
@@ -47,25 +72,21 @@ void Task_Delete(task_t * task)
  */
 void Task_Scheduler_Delete()
 {
-	for(int16_t i = 0; i < taskdeleteCount; i++)
+	currentTask = 0;
+
+	while(taskQueue[currentTask]->next != MAX_TASKS + 1)
 	{
-		for(int16_t j = 0; j < taskCount; j++)
+		uint16_t lastTask = 0;
+		lastTask = currentTask;
+		currentTask = taskQueue[currentTask]->next;
+
+		if(taskQueue[currentTask]->delete)
 		{
-			if(taskQueue[j] == taskDeleted[i])
-			{
-				taskCount--;
-
-				for(int16_t k = j; k < taskCount; k++)
-				{
-					taskQueue[k] = taskQueue[k + 1];
-				}
-
-				taskQueue[taskCount] = NULL; // 清除最后一个任务指针
-			}
+			taskQueue[lastTask]->next = taskQueue[currentTask]->next;
+			taskQueue[currentTask] = NULL;
+			currentTask = lastTask;
 		}
 	}
-
-	taskdeleteCount = 0; // 清空删除队列
 }
 
 /**
@@ -81,13 +102,16 @@ void Task_Scheduler(void)
 		if(time_counter != last_time)
 		{
 			last_time = time_counter;
+			currentTask = 0;
 
-			for(uint8_t i = 0; i < taskCount; i++)
+			while(taskQueue[currentTask]->next != MAX_TASKS + 1)
 			{
-				if(time_counter - taskQueue[i]->last_time >= taskQueue[i]->period)
+				currentTask = taskQueue[currentTask]->next;
+
+				if(time_counter - taskQueue[currentTask]->last_time >= taskQueue[currentTask]->period)
 				{
-					taskQueue[i]->last_time = time_counter;
-					taskQueue[i]->task_func();
+					taskQueue[currentTask]->last_time = time_counter;
+					taskQueue[currentTask]->task_func();
 				}
 			}
 
