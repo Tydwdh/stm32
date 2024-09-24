@@ -18,38 +18,42 @@
 #include "stdlib.h"
 #include "stdbool.h"
 
-#define MAX_TASKS 20
+#define MAX_TASKS 20 // 最大任务数量
 
-extern volatile uint32_t time_counter;
+extern volatile uint32_t time_counter; // 时间计数器
 
-
-
+/**
+ * @brief 任务初始化结构体
+ */
 typedef struct task_init_t
 {
-	void (*task_func)(void);
-	uint32_t period;
+	void (*task_func)(void); // 任务函数指针
+	uint32_t period; // 任务周期
 } task_init_t;
 
-
+/**
+ * @brief 任务状态枚举
+ */
 typedef enum
 {
-	TASK_RUNNING ,
-	TASK_SUSPENDED,
-	TASK_DELETED ,
+	TASK_RUNNING, // 任务运行中
+	TASK_SUSPENDED, // 任务挂起
+	TASK_DELETED, // 任务已删除
 } task_state_t;
 
+/**
+ * @brief 任务结构体
+ */
 typedef struct task_t
 {
-	task_init_t init;
+	task_init_t init; // 任务初始化结构体
 
+	uint32_t last_time; // 上次执行时间
 
-	uint32_t last_time;
-
-	task_state_t state;
+	task_state_t state; // 任务状态
 
 	int16_t next; // 指向下一个任务的索引
 } task_t;
-
 
 
 int16_t Task_Create(task_t * task);
