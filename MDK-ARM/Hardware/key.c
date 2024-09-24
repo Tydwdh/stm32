@@ -38,20 +38,20 @@ void Key_manage()
 
 		switch(keys[i]->status)
 		{
-			case HOVER:
-				handle_hover_state(keys[i]);
-				break;
+		case HOVER:
+			handle_hover_state(keys[i]);
+			break;
 
-			case DEBOUNCE:
-				handle_debounce_state(keys[i]);
-				break;
+		case DEBOUNCE:
+			handle_debounce_state(keys[i]);
+			break;
 
-			case PRESSED:
-				handle_pressed_state(keys[i]);
-				break;
+		case PRESSED:
+			handle_pressed_state(keys[i]);
+			break;
 
-			default:
-				break;
+		default:
+			break;
 		}
 	}
 }

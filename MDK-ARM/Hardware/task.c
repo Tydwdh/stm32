@@ -25,8 +25,20 @@ static int16_t Task_Find_Empty(void)
 		}
 	}
 
-	return 0;
+	return NULL_TASK;
 }
+
+static void Task_Set_State(task_t * task, task_state_t state)
+{
+	if(task == NULL)
+	{
+		task = taskQueue[currentTask];
+	}
+
+	task->state = state; // 设置状态
+}
+
+
 
 /**
  * @brief 创建一个任务
@@ -46,7 +58,7 @@ int16_t Task_Create(task_t * task)
 	{
 		taskQueue[currentTask]->next = Task_Find_Empty();
 		task->next = NULL_TASK;
-		task->delete = false;
+		Task_Set_State(task, TASK_RUNNING);
 		taskQueue[taskQueue[currentTask]->next] = task;
 
 		taskCount++;
@@ -58,14 +70,28 @@ int16_t Task_Create(task_t * task)
 	}
 }
 
+
+
 /**
  * @brief 标记一个任务为删除
  * @param task 任务结构体
  */
 void Task_Delete(task_t * task)
 {
-	task->delete = true;
+	Task_Set_State(task, TASK_DELETED);
 }
+
+void Task_Suspend(task_t * task)
+{
+	Task_Set_State(task, TASK_SUSPENDED);
+}
+
+void Task_Resume(task_t * task)
+{
+	Task_Set_State(task, TASK_RUNNING);
+}
+
+
 
 /**
  * @brief 删除标记为删除的任务
@@ -80,10 +106,11 @@ void Task_Scheduler_Delete()
 		lastTask = currentTask;
 		currentTask = taskQueue[currentTask]->next;
 
-		if(taskQueue[currentTask]->delete)
+		if(taskQueue[currentTask]->state == TASK_DELETED)
 		{
 			taskQueue[lastTask]->next = taskQueue[currentTask]->next;
 			taskQueue[currentTask] = NULL;
+			taskCount--;
 			currentTask = lastTask;
 		}
 	}
@@ -98,10 +125,10 @@ void Task_Execute(void)
 	{
 		currentTask = taskQueue[currentTask]->next;
 
-		if(time_counter - taskQueue[currentTask]->last_time >= taskQueue[currentTask]->period)
+		if(taskQueue[currentTask]->state == TASK_RUNNING && (time_counter - taskQueue[currentTask]->last_time) >= taskQueue[currentTask]->init.period)
 		{
 			taskQueue[currentTask]->last_time = time_counter;
-			taskQueue[currentTask]->task_func();
+			taskQueue[currentTask]->init.task_func();
 		}
 	}
 }

@@ -22,19 +22,40 @@
 
 extern volatile uint32_t time_counter;
 
-typedef struct task_t
+
+
+typedef struct task_init_t
 {
 	void (*task_func)(void);
 	uint32_t period;
+} task_init_t;
+
+
+typedef enum
+{
+	TASK_RUNNING ,
+	TASK_SUSPENDED,
+	TASK_DELETED ,
+} task_state_t;
+
+typedef struct task_t
+{
+	task_init_t init;
+
+
 	uint32_t last_time;
 
-	bool delete;
+	task_state_t state;
+
 	int16_t next; // 指向下一个任务的索引
 } task_t;
 
 
+
 int16_t Task_Create(task_t * task);
 void Task_Delete(task_t * task);
+void Task_Suspend(task_t * task);
+void Task_Resume(task_t * task);
 void Task_Scheduler(void);
 
 #endif /* _TASK_H_ */

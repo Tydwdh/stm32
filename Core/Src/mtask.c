@@ -5,16 +5,16 @@
 static void Sys_init(void);
 task_t sysTask =
 {
-	.task_func = Sys_init,
-	.period = 0,
+	.init.task_func = Sys_init,
+	.init.period = 0,
 };
 
 
 static void Uart_data_handler(void);
 task_t uartTask =
 {
-	.task_func = Uart_data_handler,
-	.period = 10,
+	.init.task_func = Uart_data_handler,
+	.init.period = 10,
 };
 
 static void Key_handler(void);
@@ -22,8 +22,8 @@ static bool Key1_check(void);
 Key_t key1;
 task_t keyTask =
 {
-	.task_func = Key_handler,
-	.period = 10,
+	.init.task_func = Key_handler,
+	.init.period = 10,
 };
 
 
@@ -46,7 +46,7 @@ static void Sys_init(void)
 	key1.init.is_key_pressed = Key1_check;
 	Key_init(&key1);
 
-	Task_Delete(&sysTask);
+	Task_Delete(NULL);
 }
 
 static void Uart_data_handler(void)
