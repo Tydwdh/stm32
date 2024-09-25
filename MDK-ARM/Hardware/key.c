@@ -25,7 +25,6 @@ void Key_init(Key_t * key)
 static void handle_hover_state(Key_t * key);
 static void handle_debounce_state(Key_t * key);
 static void handle_pressed_state(Key_t * key);
-static void interval_time_increase(Key_t * key);
 
 /**
  * @brief 按键逻辑管理函数,请间隔固定时间调用此函数
@@ -63,8 +62,10 @@ void handle_hover_state(Key_t * key)
 		key->status = DEBOUNCE;
 	}
 
-	interval_time_increase(key);
-
+	if(key->interval_time <= INTERVAL_TIME)
+	{
+		key->interval_time++;
+	}
 
 	if(!key->lock && key->interval_time > INTERVAL_TIME)
 	{
@@ -85,7 +86,6 @@ void handle_debounce_state(Key_t * key)
 		key->status = HOVER;
 	}
 
-	interval_time_increase(key);
 }
 
 void handle_key_release(Key_t * key)
@@ -152,10 +152,4 @@ bool Key_is_flag_set(Key_t * key, enum KeyFlag flag)
 	return false;
 }
 
-static void interval_time_increase(Key_t * key)
-{
-	if(key->interval_time <= INTERVAL_TIME)
-	{
-		key->interval_time++;
-	}
-}
+
