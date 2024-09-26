@@ -8,6 +8,7 @@ uint8_t rx_buffer[MAX_RX_LEN];
 
 muart_handle muart1;
 static uint8_t buffer[MAX_RX_LEN];
+static uint8_t txbuffer[MAX_RX_LEN];
 //使用DMA空闲中断接收数据建议将DMA的半完成中断中的HAL_UARTEx_RxEventCallback注释掉
 void MUART_Init(void)
 {
@@ -42,8 +43,8 @@ void MUART_Data_Transimit(muart_handle * muart)
 	while(RingBuffer_used(muart->rb_tx) != 0 && muart->huart->gState == HAL_UART_STATE_READY)
 	{
 		uint16_t len = RingBuffer_used(muart->rb_tx);
-		RingBuffer_out(muart->rb_tx, buffer, len);
-		HAL_UART_Transmit_DMA(muart->huart, buffer, len);
+		RingBuffer_out(muart->rb_tx, txbuffer, len);
+		HAL_UART_Transmit_DMA(muart->huart, txbuffer, len);
 	}
 }
 
