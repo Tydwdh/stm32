@@ -19,7 +19,9 @@ task_t uartTask =
 
 static void Key_handler(void);
 static bool Key1_check(void);
-Key_t key1;
+Key_t key1;//GPIOB, GPIO_PIN_3
+
+
 task_t keyTask =
 {
 	.init.task_func = Key_handler,
@@ -30,29 +32,29 @@ task_t keyTask =
 
 void MTask_Init(void)
 {
-	Task_Create(&sysTask);
-	Task_Create(&uartTask);
-	Task_Create(&keyTask);
+	Task_Create(&sysTask);//系统初始化
+	Task_Create(&uartTask);//串口任务
+	Task_Create(&keyTask);//按键任务
 }
 
 
 
 static void Sys_init(void)
 {
-	MUART_Init();
+	MUART_Init();//串口初始化 PA9 PA10 115200
 
 
 	key1.init.flag = (enum KeyFlag)(SINGLE_CLICK | DOUBLE_CLICK | LONG_PRESSRD);
 	key1.init.is_key_pressed = Key1_check;
-	Key_init(&key1);
+	Key_init(&key1);//按键初始化
 
-	Task_Delete(NULL);
+	Task_Delete(NULL);//该任务只执行一次,执行后删除
 }
 
 static void Uart_data_handler(void)
 {
-	MUART_Data_Process(&muart1);
-	MUART_Data_Transimit(&muart1);
+	MUART_Data_Process(&muart1);//串口接收数据处理,可自行编写
+	MUART_Data_Transimit(&muart1);//将串口缓冲区的数据发送
 }
 
 static void Key_handler(void)
